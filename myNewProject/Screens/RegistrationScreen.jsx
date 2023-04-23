@@ -18,7 +18,7 @@ const TextInputExample = () => {
                 <TextInput style={styles.input} textAlign='center' placeholder='Пароль' secureTextEntry={true} />
             </View>
             <TouchableOpacity style={styles.btn}>
-                <Text>Зареєструватись</Text>
+                <Text style={styles.btnTitle}>Зареєструватись</Text>
             </TouchableOpacity>
         </View>
         
@@ -43,8 +43,6 @@ const TextInputExample = () => {
 const styles = StyleSheet.create({
     form: {
         backgroundColor: '#fff',
-        // justifyContent: 'center',
-        // alignItems: 'center',
         height: 549,
         left: 0,
         top: 263,
@@ -52,13 +50,12 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        marginHorizontal: 120,
         marginTop: 92,
         marginBottom: 30,
         color: '#212121',
         fontSize: 30,
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        fontWeight: 500,
+        textAlign: 'center',
     },
 
     input: {
@@ -80,7 +77,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+
+    btnTitle: {
+        fontSize: 16,
+        fontWeight: 400,
+        color: '#fff',
+    },
 });
 
 export default TextInputExample;
