@@ -1,26 +1,32 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
 
 const TextInputExample = () => {
     const [text, onChangeText] = React.useState('Логін');
     const [number, onChangeNumber] = React.useState('');
 
     return (
-        <View style={styles.form}>
-            <Text style={styles.title}>Реєстрація</Text>
-            <View>
-                <TextInput style={styles.input} textAlign='center' placeholder='Логін' />
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <View style={styles.form}>
+                <Text style={styles.title}>Реєстрація</Text>
+                <View>
+                    <TextInput style={styles.input} textAlign='center' onChangeText={onChangeText} value={text} placeholder='Логін' />
+                </View>
+                <View>
+                    <TextInput style={styles.input} textAlign='center' onChangeText={onChangeText} value={text} placeholder='Електронна пошта' />
+                </View>
+                <View>
+                    <TextInput style={styles.input} textAlign='center' onChangeText={onChangeNumber} value={number} placeholder='Пароль' secureTextEntry={true} />
+                </View>
+                <TouchableOpacity style={styles.btn}>
+                    <Text style={styles.btnTitle}>Зареєструватись</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.btnTitle1}>Вже є акаунт? Увійти</Text>
+                </TouchableOpacity>
             </View>
-            <View>
-                <TextInput style={styles.input} textAlign='center' placeholder='Електронна пошта' />
-            </View>
-            <View>
-                <TextInput style={styles.input} textAlign='center' placeholder='Пароль' secureTextEntry={true} />
-            </View>
-            <TouchableOpacity style={styles.btn}>
-                <Text style={styles.btnTitle}>Зареєструватись</Text>
-            </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
+
         
         // <SafeAreaView style={styles.form}>
         //     <Text style={styles.text}>Реєстрація</Text>
@@ -74,6 +80,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 10,
         marginTop: 43,
+        marginBottom: 16,
         marginHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'center',
@@ -83,7 +90,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 400,
         color: '#fff',
+        textAlign: 'center',
     },
+
+    btnTitle1: {
+        fontSize: 16,
+        fontWeight: 400,
+        color: '#1B4371',
+        textAlign: 'center',
+    }
 });
 
 export default TextInputExample;
