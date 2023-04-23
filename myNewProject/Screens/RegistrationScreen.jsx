@@ -1,104 +1,181 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from "react";
+import {
+    StyleSheet,
+    View,
+    TextInput,
+    TouchableWithoutFeedback,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    Alert,
+    Text,
+    TouchableOpacity,
+    Image,
+} from "react-native";
+import PropTypes from 'prop-types';
 
-const TextInputExample = () => {
-    const [text, onChangeText] = React.useState('Логін');
-    const [number, onChangeNumber] = React.useState('');
+export default function RegistrationScreen({ setIsLogged }) {
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+
+    const nameHandler = (name) => setName(name);
+    const passwordHandler = (email) => setPassword(email);
+    const mailHandler = (password) => setEmail(password);
+    const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+
+    const onLogin = () => {
+        if (name === '' || password === '' || email === '') {
+            return Alert.alert("Всі поля повинні бути заповнені")
+        }
+        Alert.alert("Credentials", `${name} + ${email} + ${password}`);
+    console.log('name: ', {name})
+    };
+
+    const linkToLoginScreen = () => {
+        setIsLogged(false)
+    }
+    const handlePress = () => {
+        // setIsShowKeyboard(false);
+        Keyboard.dismiss();
+    };
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <View style={styles.form}>
-                <Text style={styles.title}>Реєстрація</Text>
-                <View>
-                    <TextInput style={styles.input} textAlign='center' onChangeText={onChangeText} value={text} placeholder='Логін' />
-                </View>
-                <View>
-                    <TextInput style={styles.input} textAlign='center' onChangeText={onChangeText} value={text} placeholder='Електронна пошта' />
-                </View>
-                <View>
-                    <TextInput style={styles.input} textAlign='center' onChangeText={onChangeNumber} value={number} placeholder='Пароль' secureTextEntry={true} />
-                </View>
-                <TouchableOpacity style={styles.btn}>
-                    <Text style={styles.btnTitle}>Зареєструватись</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.btnTitle1}>Вже є акаунт? Увійти</Text>
-                </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={handlePress} >
+            <View style={styles.container} >
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                    <View style={styles.photo} >
+                        <Image style={styles.addPhoto} source={require('./Images/add.jpg')} />
+                    </View>
+                    <View style={styles.titleBox}>
+                        <Text style={styles.title}>Реєстрація</Text>
+                    </View>
+                    <View>
+                        <TextInput
+                            value={name}
+                            onChangeText={nameHandler}
+                            placeholder="Логін"
+                            style={styles.input}
+                            onFocus={() => { setIsShowKeyboard(true) }}
+                        />
+                        <TextInput
+                            value={email}
+                            onChangeText={mailHandler}
+                            placeholder="Адреса електронної пошти"
+                            style={styles.input}
+                        />
+                        <TextInput
+                            value={password}
+                            onChangeText={passwordHandler}
+                            placeholder="Пароль"
+                            secureTextEntry={true}
+                            style={styles.input}
+                        />
+                    </View>
+                    <TouchableOpacity activeOpacity={0.2} style={styles.button}>
+                        <Text style={styles.buttonText} onPress={onLogin}>Зареєструватись</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={linkToLoginScreen}>
+                        <Text style={styles.linkText}>Вже є акаунт? Увійти</Text>
+                    </TouchableOpacity>
+                </KeyboardAvoidingView>
             </View>
-        </KeyboardAvoidingView>
-
-        
-        // <SafeAreaView style={styles.form}>
-        //     <Text style={styles.text}>Реєстрація</Text>
-        //     <TextInput
-        //         style={styles.input}
-        //         onChangeText={onChangeText}
-        //         value={text}
-        //     />
-        //     <TextInput
-        //         style={styles.input}
-        //         onChangeText={onChangeNumber}
-        //         value={number}
-        //         placeholder="useless placeholder"
-        //         keyboardType="numeric"
-        //     />
-        // </SafeAreaView>
+        </TouchableWithoutFeedback>
     );
-};
+}
 
 const styles = StyleSheet.create({
-    form: {
-        backgroundColor: '#fff',
-        height: 549,
-        left: 0,
-        top: 263,
-        borderRadius: 25,
-    },
-
-    title: {
-        marginTop: 92,
-        marginBottom: 30,
-        color: '#212121',
-        fontSize: 30,
-        fontWeight: 500,
-        textAlign: 'center',
-    },
-
-    input: {
-        marginHorizontal: 20,
-        borderWidth: 1,
-        borderColor: '#E8E8E8',
-        height: 40,
-        borderRadius: 10,
-        color: '#000',
+    photo: {
+        width: 120,
+        height: 120,
         backgroundColor: '#F6F6F6',
-        marginTop: 16,
+        borderRadius: 16,
+        position: 'absolute',
+        left: '30%',
+        top: '-20%',
+        zIndex: 100,
     },
+    addPhoto: {
+        position: 'absolute',
+        width: 25,
+        height: 25,
+        right: -12.5,
+        bottom: 14,
 
-    btn: {
-        backgroundColor: '#FF6C00',
-        height: 40,
-        borderRadius: 10,
-        marginTop: 43,
-        marginBottom: 16,
-        marginHorizontal: 20,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: '500',
+        textAlign: 'center'
+    },
+    buttonText: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: '400',
         alignItems: 'center',
-        justifyContent: 'center',
+        lineHeight: 19,
+        color: '#fff'
     },
+    titleBox: {
+        marginBottom: 30,
+        marginTop: 90,
+    },
+    container: {
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: 550,
+        alignItems: "center",
+        justifyContent: "center",
+        ...Platform.select({
+            ios: {
+                backgroundColor: '#000'
+            },
+            android: {
+                backgroundColor: '#fff'
+            },
+        }),
+    },
+    input: {
+        width: 343,
+        height: 50,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: "#e8e8e8",
+        backgroundColor: '#f6f6f6',
+        marginBottom: 10,
+        borderRadius: 8,
+        shadowOpacity: 0.25,
+        shadowColor: '#000',
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 2 },
+        elevation: 4,
 
-    btnTitle: {
-        fontSize: 16,
-        fontWeight: 400,
-        color: '#fff',
+    },
+    button: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: 343,
+        height: 52,
+        marginTop: 40,
+        padding: 16,
+        backgroundColor: '#FF6C00',
+        borderRadius: 100,
+        alignItems: 'center',
+    },
+    linkText: {
         textAlign: 'center',
-    },
-
-    btnTitle1: {
-        fontSize: 16,
-        fontWeight: 400,
+        marginTop: 16,
         color: '#1B4371',
-        textAlign: 'center',
-    }
+        fontSize: 16,
+        fontWeight: '400',
+    },
 });
 
-export default TextInputExample;
+RegistrationScreen.propTypes = {
+    setIsLogged: PropTypes.func.isRequired
+}
