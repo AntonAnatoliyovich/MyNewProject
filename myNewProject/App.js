@@ -6,8 +6,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <ImageBackground 
-        source={require("./assets/images/backgroundImage.jpeg")} 
-        style={styles.image}
+        source={require('./assets/images/backgroundImage.jpeg')} 
+        style={{ width: '100%', height: '100%' }}
       >
         <Text>Open up App.js to start working on your app!</Text>
         <RegistrationScreen/>
@@ -23,12 +23,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  image: {
-    flex: 1,
-    width: '100%',
-    resizeMode: "cover",
-    justifyContent: "center",
-    }
+  }
 });
