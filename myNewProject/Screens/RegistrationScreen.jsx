@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
         height: 25,
         right: -12.5,
         bottom: 14,
-
     },
     title: {
         fontSize: 30,
@@ -154,7 +153,6 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         shadowOffset: { width: 0, height: 2 },
         elevation: 4,
-
     },
     button: {
         display: 'flex',

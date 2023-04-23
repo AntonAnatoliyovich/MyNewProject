@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import PropTypes from 'prop-types';
 
 export default function LoginScreen({ setIsLogged }) {
@@ -44,10 +44,10 @@ export default function LoginScreen({ setIsLogged }) {
                         style={styles.input}
                     />
                     <TouchableOpacity activeOpacity={0.2} style={styles.button}>
-                    <Text style={styles.buttonText} onPress={onLogin}>Увійти</Text>
-                                        </TouchableOpacity>
+                        <Text style={styles.buttonText} onPress={onLogin}>Увійти</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={linkToRegitryScreen}>
-                    <Text style={styles.linkText}>Немає акаунта? Зареєструватись</Text>
+                        <Text style={styles.linkText}>Немає акаунта? Зареєструватись</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </View>
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         shadowOffset: { width: 0, height: 2 },
         elevation: 4,
-
     },
     button: {
         display: 'flex',
