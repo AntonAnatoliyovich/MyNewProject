@@ -1,28 +1,50 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import RegistrationScreen from './Screens/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen';
-import { useState } from 'react';
-// import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+// import { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import  Home  from './Screens/Home';
 
+const MainStack = createStackNavigator();
 export default function App() {
-  const [isLogged, setIsLogged] = useState(true);
+  // const [isLogged, setIsLogged] = useState(true);
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <ImageBackground source={require('./Screens/Images/PhotoBG.jpg')}
-        style={{ width: '100%', height: '100%' }}
-      >
-        {isLogged ?
-          <RegistrationScreen setIsLogged={setIsLogged}/> :
-          <LoginScreen setIsLogged={setIsLogged}/>
-        }
-      </ImageBackground>
-    </View>
+    <NavigationContainer>
+
+      {/* <View style={styles.container}>
+        <StatusBar style="auto" />
+        <ImageBackground source={require('./Screens/Images/PhotoBG.jpg')}
+          style={{ width: '100%', height: '100%' }}
+        >
+        </ImageBackground>
+      </View> */}
+      <MainStack.Navigator initialRouteName="LoginScreen">
+
+        <MainStack.Screen name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            headerShown: false,
+            title: 'Войти',
+            headerTitleAlign: 'center',
+            headerTitleStyle: { fontSize: 30 },
+          }} />
+        
+          <MainStack.Screen name="RegistrationScreen"
+            component={RegistrationScreen}
+          options={{ title: 'Регистрация' }} />
+        
+        <MainStack.Screen name="Home" component={Home}
+          options={{ headerShown: false }} />
+      </MainStack.Navigator>
+
+    </NavigationContainer>
+
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

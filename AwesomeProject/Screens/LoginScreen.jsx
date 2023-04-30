@@ -1,9 +1,14 @@
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Alert, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import PropTypes from 'prop-types';
+import {
+    Alert, Keyboard, KeyboardAvoidingView, Platform, StyleSheet,
+    Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View,ImageBackground
+} from "react-native";
+// import PropTypes from 'prop-types';
 
-export default function LoginScreen({ setIsLogged }) {
+export default function LoginScreen() {
+    const navigation = useNavigation();
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("")
 
@@ -11,29 +16,32 @@ export default function LoginScreen({ setIsLogged }) {
     const mailHandler = (password) => setEmail(password);
 
     const onLogin = () => {
-        if ( password === '' || email === '') {
-            return Alert.alert("Всі поля повинні бути заповнені")
+        if (password === '' || email === '') {
+            return Alert.alert("Все поля должны быть заполнены")
         }
-        Alert.alert("Credentials", `${email} + ${password}`);
+        // Alert.alert("Credentials", `${email} + ${password}`);
+        navigation.navigate("Home")
     };
 
     const linkToRegitryScreen = () => {
-        setIsLogged(true)
+        navigation.navigate("RegistrationScreen")
     }
-
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ImageBackground source={require('./Images/PhotoBG.jpg')}            
+            style={{ width: '100%', height: '100%' }}
+            >
             <View style={styles.container}>
                 <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    behavior={Platform.OS === "ios" ? "padding" : ""}
                 >
                     <View style={styles.titleBox}>
-                        <Text style={styles.title}>Увійти</Text>
-                    </View>                    
+                        <Text style={styles.title}>Войти</Text>
+                    </View>
                     <TextInput
                         value={email}
                         onChangeText={mailHandler}
-                        placeholder="Адреса електронної пошти"
+                        placeholder="Адрес электронной почты"
                         style={styles.input}
                     />
                     <TextInput
@@ -43,14 +51,16 @@ export default function LoginScreen({ setIsLogged }) {
                         secureTextEntry={true}
                         style={styles.input}
                     />
+                    </KeyboardAvoidingView>
                     <TouchableOpacity activeOpacity={0.2} style={styles.button}>
-                        <Text style={styles.buttonText} onPress={onLogin}>Увійти</Text>
+                        <Text style={styles.buttonText} onPress={onLogin}>Войти</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={linkToRegitryScreen}>
-                        <Text style={styles.linkText}>Немає акаунта? Зареєструватись</Text>
+                        <Text style={styles.linkText}>Нет аккаунта? Зарегистрироваться</Text>
                     </TouchableOpacity>
-                </KeyboardAvoidingView>
             </View>
+                            </ImageBackground>
+
         </TouchableWithoutFeedback>
     );
 }
@@ -74,6 +84,7 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     container: {
+        margin: 0,
         padding: 0,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
@@ -106,6 +117,7 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         shadowOffset: { width: 0, height: 2 },
         elevation: 4,
+
     },
     button: {
         display: 'flex',
@@ -127,6 +139,6 @@ const styles = StyleSheet.create({
     },
 });
 
-LoginScreen.propTypes = {
-    setIsLogged: PropTypes.func.isRequired
-}
+// LoginScreen.propTypes = {
+//     setIsLogged: PropTypes.func.isRequired
+// }

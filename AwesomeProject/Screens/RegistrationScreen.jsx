@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -11,13 +12,16 @@ import {
     Text,
     TouchableOpacity,
     Image,
+    ImageBackground
 } from "react-native";
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-export default function RegistrationScreen({ setIsLogged }) {
+export default function RegistrationScreen() {
+    const navigation = useNavigation();
+
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("")
 
     const nameHandler = (name) => setName(name);
     const passwordHandler = (email) => setPassword(email);
@@ -26,14 +30,14 @@ export default function RegistrationScreen({ setIsLogged }) {
 
     const onLogin = () => {
         if (name === '' || password === '' || email === '') {
-            return Alert.alert("Всі поля повинні бути заповнені")
+            return Alert.alert("Все поля должны быть заполнены")
         }
         Alert.alert("Credentials", `${name} + ${email} + ${password}`);
-    console.log('name: ', {name})
+        console.log('name: ', {name})
     };
 
     const linkToLoginScreen = () => {
-        setIsLogged(false)
+        navigation.navigate("LoginScreen")
     }
     const handlePress = () => {
         // setIsShowKeyboard(false);
@@ -42,6 +46,9 @@ export default function RegistrationScreen({ setIsLogged }) {
 
     return (
         <TouchableWithoutFeedback onPress={handlePress} >
+            <ImageBackground source={require('./Images/PhotoBG.jpg')}            
+            style={{ width: '100%', height: '100%' }}
+            >
             <View style={styles.container} >
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -50,20 +57,20 @@ export default function RegistrationScreen({ setIsLogged }) {
                         <Image style={styles.addPhoto} source={require('./Images/add.jpg')} />
                     </View>
                     <View style={styles.titleBox}>
-                        <Text style={styles.title}>Реєстрація</Text>
+                        <Text style={styles.title}>Регистрация</Text>
                     </View>
                     <View>
                         <TextInput
                             value={name}
                             onChangeText={nameHandler}
-                            placeholder="Логін"
+                            placeholder="Логин"
                             style={styles.input}
                             onFocus={() => { setIsShowKeyboard(true) }}
                         />
                         <TextInput
                             value={email}
                             onChangeText={mailHandler}
-                            placeholder="Адреса електронної пошти"
+                            placeholder="Адрес электронной почты"
                             style={styles.input}
                         />
                         <TextInput
@@ -74,14 +81,16 @@ export default function RegistrationScreen({ setIsLogged }) {
                             style={styles.input}
                         />
                     </View>
+                </KeyboardAvoidingView>
                     <TouchableOpacity activeOpacity={0.2} style={styles.button}>
-                        <Text style={styles.buttonText} onPress={onLogin}>Зареєструватись</Text>
+                        <Text style={styles.buttonText} onPress={onLogin}>Зарегистрироваться</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={linkToLoginScreen}>
-                        <Text style={styles.linkText}>Вже є акаунт? Увійти</Text>
+                        <Text style={styles.linkText}>Уже есть аккаунт? Войти</Text>
                     </TouchableOpacity>
-                </KeyboardAvoidingView>
             </View>
+                                        </ImageBackground>
+
         </TouchableWithoutFeedback>
     );
 }
@@ -103,6 +112,7 @@ const styles = StyleSheet.create({
         height: 25,
         right: -12.5,
         bottom: 14,
+        borderRadius: 13,
     },
     title: {
         fontSize: 30,
@@ -153,6 +163,7 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         shadowOffset: { width: 0, height: 2 },
         elevation: 4,
+
     },
     button: {
         display: 'flex',
@@ -174,6 +185,6 @@ const styles = StyleSheet.create({
     },
 });
 
-RegistrationScreen.propTypes = {
-    setIsLogged: PropTypes.func.isRequired
-}
+// RegistrationScreen.propTypes = {
+//     setIsLogged: PropTypes.func.isRequired
+// }
