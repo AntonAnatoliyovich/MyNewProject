@@ -1,55 +1,50 @@
-import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import {ImageBackground, StyleSheet, View} from 'react-native';
-import RegistrationScreen from './Screens/RegistrationScreen';
-import LoginScreen from './Screens/LoginScreen';
-// import { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import  Home  from './Screens/Home';
+import { Provider } from "react-redux";
 
-const MainStack = createStackNavigator();
+import { StatusBar } from "expo-status-bar";
+
+import { View, StyleSheet } from "react-native";
+
+import { store } from "./redux/store";
+
+import { useCallback } from "react";
+
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+
+import Main from "./components/Main";
+
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
-  // const [isLogged, setIsLogged] = useState(true);
+  const [fontsLoaded] = useFonts({
+    RobotoRegular: require("./assets/fonts/Roboto-Regular.ttf"),
+    RobotoMedium: require("./assets/fonts/Roboto-Medium.ttf"),
+    RobotoBold: require("./assets/fonts/Roboto-Bold.ttf"),
+  });
 
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <NavigationContainer>
-
-      {/* <View style={styles.container}>
-        <StatusBar style="auto" />
-        <ImageBackground source={require('./Screens/Images/PhotoBG.jpg')}
-          style={{ width: '100%', height: '100%' }}
-        >
-        </ImageBackground>
-      </View> */}
-      <MainStack.Navigator initialRouteName="LoginScreen">
-
-        <MainStack.Screen name="LoginScreen"
-          component={LoginScreen}
-          options={{
-            headerShown: false,
-            title: 'Войти',
-            headerTitleAlign: 'center',
-            headerTitleStyle: { fontSize: 30 },
-          }} />
-        
-          <MainStack.Screen name="RegistrationScreen"
-            component={RegistrationScreen}
-          options={{ title: 'Регистрация' }} />
-        
-        <MainStack.Screen name="Home" component={Home}
-          options={{ headerShown: false }} />
-      </MainStack.Navigator>
-
-    </NavigationContainer>
-
+    <>
+      <Provider store={store}>
+        <View onLayout={onLayoutRootView} style={styles.container}>
+          <StatusBar style="auto" />
+          <Main />
+        </View>
+      </Provider>
+    </>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
 });
