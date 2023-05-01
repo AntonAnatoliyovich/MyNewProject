@@ -33,7 +33,7 @@ export default function RegistrationScreen() {
             return Alert.alert("Все поля должны быть заполнены")
         }
         Alert.alert("Credentials", `${name} + ${email} + ${password}`);
-        console.log('name: ', {name})
+   console.log('name: ', {name})
     };
 
     const linkToLoginScreen = () => {
@@ -47,8 +47,8 @@ export default function RegistrationScreen() {
     return (
         <TouchableWithoutFeedback onPress={handlePress} >
             <ImageBackground source={require('./Images/PhotoBG.jpg')}            
-            style={{ width: '100%', height: '100%' }}
-            >
+          style={{ width: '100%', height: '100%' }}
+        >
             <View style={styles.container} >
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -21,6 +21,7 @@ export default function PostsScreen() {
                 </View>
             </View>
             {/* <View style={ styles.footer}>
+
             </View> */}
         </View>
     )
